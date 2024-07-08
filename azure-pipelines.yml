@@ -1,0 +1,23 @@
+name: terrafrom-code
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+Stages:
+  stage: 
+    jobs: 
+    - job: Terraform init
+    steps:
+
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'New-service-connection-sonamacc'
+    backendAzureRmResourceGroupName: 'devrg001858'
+    backendAzureRmStorageAccountName: 'devsa001858'
+    backendAzureRmContainerName: 'logs'
+    backendAzureRmKey: 'tf/terraform.tfstate'
