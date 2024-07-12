@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  name: $(agent)
+  name: Default
 
 stages:
   - stage: TerraformInit
