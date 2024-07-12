@@ -1,7 +1,7 @@
 module-rg = {
   rg1 = {
     name     = "rg1"
-    location = "weastus"
+    location = "eastus"
   }
 }
 
