@@ -39,12 +39,15 @@ stages:
     jobs:
      - job: job1
        steps:
+       - task: TerraformInstaller@1
+         inputs:
+           terraformVersion: 'latest'
        - task: TerraformTaskV4@4
          displayName: TerraformPlanTask
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: '/home/test/terraform-newcode/Env'
+           workingDirectory: '/terraform-newcode/Env'
            backendServiceArm: 'Azure-conn-service'
            backendAzureRmResourceGroupName: 'bipin-rg'
            backendAzureRmStorageAccountName: 'autostore123'
