@@ -1,5 +1,5 @@
 module "module-rg" {
-  source = "../modules/resourcegroup"
+  source = "github.com/rkant18/terraform-newcode.git/modules/resourcegroup"
   rg     = var.module-rg
 }
 # module "module-vnet" {
