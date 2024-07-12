@@ -17,6 +17,7 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/Env'
            backendServiceArm: 'Azure-conn-service'
            backendAzureRmResourceGroupName: 'bipin-rg'
            backendAzureRmStorageAccountName: 'autostore123'
