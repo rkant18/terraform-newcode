@@ -5,6 +5,14 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+  - stage: TFSec
+    displayName: TFSec
+    jobs:
+      - job: ScanCodeTFsec
+        steps:
+          - task: tfsec@1
+            inputs:
+              version: 'v1.26.0'
   - stage: TerraformInit
     displayName: TerraformInit
     jobs:
@@ -44,5 +52,28 @@ stages:
            command: 'plan'
            workingDirectory: 'Env'
            environmentServiceNameAzureRM: 'Azure-conn-service'
-  
-           
+
+
+
+
+  - stage: TerraformApply
+    displayName: TerraformApplyStage
+    jobs:
+     - job: Apply
+       steps:
+       - task: TerraformTaskV4@4
+         displayName: TerraformPlanTaskwithInt
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: 'Env'
+           backendServiceArm: 'Azure-conn-service'
+           backendAzureRmResourceGroupName: 'bipin-rg'
+           backendAzureRmStorageAccountName: 'autostore123'
+           backendAzureRmContainerName: 'autostate'
+           backendAzureRmKey: 'new.tfstate'    
+       - task: TerraformTaskV4@4
+         inputs:
+           provider: 'azurerm'
+           command: 'apply'
+           environmentServiceNameAzureRM: 'Azure-conn-service'
