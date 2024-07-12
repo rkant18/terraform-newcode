@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  name: Linux-agent
+  name: $(agent)
 
 stages:
   - stage: TerraformInit
