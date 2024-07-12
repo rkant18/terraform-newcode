@@ -1,5 +1,3 @@
-name: terrafrom-code
-
 trigger:
 - master
 
@@ -10,7 +8,7 @@ stages:
   - stage: TerraformInit
     displayName: TerraformInit
     jobs:
-     - job: Init
+     - job: job1
        steps:
        - task: TerraformTaskV4@4
          displayName: TerraformInitTask
@@ -22,55 +20,29 @@ stages:
            backendAzureRmResourceGroupName: 'bipin-rg'
            backendAzureRmStorageAccountName: 'autostore123'
            backendAzureRmContainerName: 'autostate'
-           backendAzureRmKey: 'terraform.tfstate'
-       - task: TerraformTaskV4@4
-         inputs:
-           provider: 'azurerm'
-           command: 'validate'
-  
+           backendAzureRmKey: 'new.tfstate'
+
   - stage: TerraformPlan
     displayName: TerraformPlanStage
-    jobs:
-     - job: Plan
-       steps:
-       - task: TerraformInstaller@1
-         inputs:
-           terraformVersion: 'latest'
-       - task: TerraformTaskV4@4
-         displayName: TerraformPlanTask
-         inputs:
-           provider: 'azurerm'
-           command: 'init'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-newcode/Env'
-           backendServiceArm: 'Azure-conn-service'
-           backendAzureRmResourceGroupName: 'bipin-rg'
-           backendAzureRmStorageAccountName: 'autostore123'
-           backendAzureRmContainerName: 'autostate'
-           backendAzureRmKey: 'terraform.tfstate'
-       - task: TerraformTaskV4@4
-         inputs:
-           provider: 'azurerm'
-           command: 'plan'
-           environmentServiceNameAzureRM: 'Azure-conn-service'
-           
-  - stage: TerraformApply
-    displayName: TerraformApplyStage
     jobs:
      - job: job1
        steps:
        - task: TerraformTaskV4@4
-         displayName: TerraformApplyTask
+         displayName: TerraformPlanTaskwithInit
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/Env'
+           workingDirectory: 'Env'
            backendServiceArm: 'Azure-conn-service'
            backendAzureRmResourceGroupName: 'bipin-rg'
            backendAzureRmStorageAccountName: 'autostore123'
            backendAzureRmContainerName: 'autostate'
-           backendAzureRmKey: 'terraform.tfstate'
+           backendAzureRmKey: 'new.tfstate'
        - task: TerraformTaskV4@4
          inputs:
-            provider: 'azurerm'
-            command: 'apply'
-            environmentServiceNameAzureRM: 'Azure-conn-service'
+           provider: 'azurerm'
+           command: 'plan'
+           workingDirectory: 'Env'
+           environmentServiceNameAzureRM: 'Azure-conn-service'
+  
+           
