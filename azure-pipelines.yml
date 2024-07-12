@@ -6,18 +6,20 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-Stages:
-  stage: 
-    jobs: 
-    - job: Terraform init
-    steps:
-
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendServiceArm: 'New-service-connection-sonamacc'
-    backendAzureRmResourceGroupName: 'devrg001858'
-    backendAzureRmStorageAccountName: 'devsa001858'
-    backendAzureRmContainerName: 'logs'
-    backendAzureRmKey: 'tf/terraform.tfstate'
+stages:
+  - stage: TerraformInit
+    displayName: TerraformInit
+    jobs:
+     - job: job1
+       steps:
+       - task: TerraformTaskV4@4
+         displayName: TerraformInitTask
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: 'Modules'
+           backendServiceArm: 'Azure-conn-service'
+           backendAzureRmResourceGroupName: 'bipin-rg'
+           backendAzureRmStorageAccountName: 'autostore123'
+           backendAzureRmContainerName: 'autostate'
+           backendAzureRmKey: 'terraform.tfstate'
