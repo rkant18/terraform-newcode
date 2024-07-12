@@ -22,3 +22,49 @@ stages:
            backendAzureRmStorageAccountName: 'autostore123'
            backendAzureRmContainerName: 'autostate'
            backendAzureRmKey: 'terraform.tfstate'
+       - task: TerraformTaskV4@4
+         inputs:
+           provider: 'azurerm'
+           command: 'validate'
+  
+  - stage: TerraformPlan
+    displayName: TerraformPlanStage
+    jobs:
+     - job: job1
+       steps:
+       - task: TerraformTaskV4@4
+         displayName: TerraformPlanTask
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           backendServiceArm: 'Azure-conn-service'
+           backendAzureRmResourceGroupName: 'bipin-rg'
+           backendAzureRmStorageAccountName: 'autostore123'
+           backendAzureRmContainerName: 'autostate'
+           backendAzureRmKey: 'terraform.tfstate'
+       - task: TerraformTaskV4@4
+         inputs:
+           provider: 'azurerm'
+           command: 'plan'
+           environmentServiceNameAzureRM: 'Azure-conn-service'
+           
+  - stage: TerraformApply
+    displayName: TerraformApplyStage
+    jobs:
+     - job: job1
+       steps:
+       - task: TerraformTaskV4@4
+         displayName: TerraformApplyTask
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           backendServiceArm: 'Azure-conn-service'
+           backendAzureRmResourceGroupName: 'bipin-rg'
+           backendAzureRmStorageAccountName: 'autostore123'
+           backendAzureRmContainerName: 'autostate'
+           backendAzureRmKey: 'terraform.tfstate'
+       - task: TerraformTaskV4@4
+         inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            environmentServiceNameAzureRM: 'Azure-conn-service'
