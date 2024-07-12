@@ -7,6 +7,13 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+  - stage: TerrafromInstaller
+    jobs:
+      - job: job1
+        steps:
+        - task: TerraformInstaller@1
+          inputs:
+           terraformVersion: 'latest'
   - stage: TerraformInit
     displayName: TerraformInit
     jobs:
