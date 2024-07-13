@@ -44,6 +44,7 @@ stages:
            command: 'plan'
            workingDirectory: 'Env'
            environmentServiceNameAzureRM: 'Azure-conn-service'
+
   - stage:
     displayName: validation
     pool: server
@@ -53,6 +54,8 @@ stages:
       - task: ManualIntervention@8
         inputs:
           instructions: 'check and review'
+          onTimeout: reject
+
   - stage: 
     displayName: Apply 
     jobs:
