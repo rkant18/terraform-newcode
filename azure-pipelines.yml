@@ -71,9 +71,22 @@ stages:
       dependsOn: Manualvalidation
       steps:
         - task: TerraformTaskV4@4
+          displayName: TerraformPlanTaskwithInit
           inputs:
            provider: 'azurerm'
-           command: 'apply'
+           command: 'init'
            workingDirectory: 'Env'
+           backendServiceArm: 'Azure-conn-service'
+           backendAzureRmResourceGroupName: 'bipin-rg'
+           backendAzureRmStorageAccountName: 'autostore123'
+           backendAzureRmContainerName: 'autostate'
+           backendAzureRmKey: 'new.tfstate'
+
+        - task: TerraformTaskV4@4
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: 'Env'
+            environmentServiceNameAzureRM: 'Azure-conn-service'
 
       
