@@ -72,8 +72,9 @@ stages:
       steps:
         - task: TerraformTaskV4@4
           inputs:
-           provider: 'azurerm'
-           command: 'apply'
-           workingDirectory: 'Env'
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: 'Env'
+            environmentServiceNameAzureRM: 'Azure-conn-service'
 
       
