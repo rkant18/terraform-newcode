@@ -45,22 +45,20 @@ stages:
            workingDirectory: 'Env'
            environmentServiceNameAzureRM: 'Azure-conn-service'
 
-  - stage:
-    displayName: validation
-    pool: server
+  - stage: 
+    displayName: Apply 
     jobs:
     - job: Manualvalidation
+      displayName: validation
+      pool: server
       steps:
       - task: ManualIntervention@8
         inputs:
           instructions: 'check and review'
           onTimeout: reject
-
-  - stage: 
-    displayName: Apply 
-    jobs:
-      - job: Applychange
-        steps:
+    - job: applychange
+      dependsOn: Manualvalidation
+      steps:
         - task: TerraformTaskV4@4
           inputs:
            provider: 'azurerm'
