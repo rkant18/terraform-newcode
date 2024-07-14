@@ -49,13 +49,14 @@ stages:
     displayName: Apply 
     jobs:
     - job: Manualvalidation
+      
       displayName: validation
       pool: server
       steps:
-      - task: ManualIntervention@8
+      - task: ManualValidation@1
         inputs:
-          instructions: 'check and review'
-          emailRecipients: 'ravisunravi@gmail.com'
+         notifyUsers: 'ravisunravi@gmail.com'
+         instructions: 'review'
 
     - job: applychange
       dependsOn: Manualvalidation
